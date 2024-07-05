@@ -17,9 +17,14 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.22.2'
+          
+      - name: Verify Flutter Installation
+        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
+        working-directory: frontend/lib
 
       - name: Run analyzer
         run: flutter analyze
+        working-directory: frontend/lib
