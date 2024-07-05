@@ -1,5 +1,7 @@
 # MedicationReminderApp
 
+![example workflow](https://github.com/SylvieAsija/MedicationReminderApp/actions/workflows/Pytest_Pep8.yml/badge.svg)
+
 Frontend Design: Figma
 Frontend/Backend SDK: Flutter
 Database: TBD
