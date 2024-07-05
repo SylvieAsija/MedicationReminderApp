@@ -22,9 +22,11 @@ jobs:
         run: flutter --version
 
       - name: Install dependencies
-        run: flutter pub get
-        working-directory: frontend/lib
+        run: |
+          cd frontend/lib
+          flutter pub get
 
       - name: Run analyzer
-        run: flutter analyze
-        working-directory: frontend/lib
+        run: |
+          cd frontend/lib
+          flutter analyze
