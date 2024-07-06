@@ -24,6 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd frontend/lib
+          pwd
           flutter pub get
 
       - name: Run analyzer
