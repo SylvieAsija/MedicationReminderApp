@@ -13,5 +13,5 @@ def test_page(request):
 
 
 def api_home(request):
-    return render(request, os.path.join(settings.FRONTEND_DIR, \
+    return render(request, os.path.join(settings.FRONTEND_DIR,
                   'api_home.html'))

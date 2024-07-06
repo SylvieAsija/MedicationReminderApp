@@ -67,7 +67,7 @@ TEMPLATES = [
         'DIRS': [
             FRONTEND_DIR,
             os.path.join(FRONTEND_DIR, 'lib'),
-            ],
+                ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
