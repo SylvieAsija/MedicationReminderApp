@@ -20,10 +20,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          ls
-          cd frontend/lib
-          ls
+          cd frontend
           flutter pub get
 
       - name: Run analyzer
-        run: flutter analyze
+        run: |
+          cd frontend
+          flutter analyze
