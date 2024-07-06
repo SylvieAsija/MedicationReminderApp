@@ -6,7 +6,8 @@
 #   * set to the desired behavior
 #   * Remove `managed = False` lines if you wish to allow Django 
 #   * to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
+# Feel free to rename the models, but don't rename db_table values 
+# or field names.
 from django.db import models
 
 
@@ -44,8 +45,8 @@ class MedicationInfo(models.Model):
 class MedicationLog(models.Model):
     log_id = models.AutoField(primary_key=True)
     user = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
-    medication = models.ForeignKey(MedicationInfo, models.DO_NOTHING, blank=True, 
-                                   null=True)
+    medication = models.ForeignKey(MedicationInfo, models.DO_NOTHING, 
+                                   blank=True, null=True)
     date = models.DateField()
     time = models.TimeField()
     time_zone = models.CharField(max_length=5)
