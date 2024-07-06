@@ -20,7 +20,11 @@ jobs:
 
       - name: Install dependencies
         run: |
+          ls
+          pwd
           cd frontend
+          ls
+          pwd
           flutter pub get
 
       - name: Run analyzer
