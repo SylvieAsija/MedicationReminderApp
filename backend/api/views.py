@@ -20,7 +20,7 @@ def test_page(request):
 
 def api_home(request):
     
-    #THIS IS A SAMPLE USER, MUST BE EDITED
+    # THIS IS A SAMPLE USER, MUST BE EDITED
     user_id = 1 
     if request.method == 'GET':
         meds = MedicationInfo.objects.filter(user_id=user_id)
