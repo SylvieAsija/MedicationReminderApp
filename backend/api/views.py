@@ -19,7 +19,9 @@ def test_page(request):
 #                   'main.dart'))
 
 def api_home(request):
-    user_id = 1 #THIS IS A SAMPLE USER, MUST BE EDITED
+    
+    #THIS IS A SAMPLE USER, MUST BE EDITED
+    user_id = 1 
     if request.method == 'GET':
         meds = MedicationInfo.objects.filter(user_id=user_id)
         data = list(meds.values())
