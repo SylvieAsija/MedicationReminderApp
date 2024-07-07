@@ -24,7 +24,7 @@ class Users(models.Model):
     weight = models.IntegerField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'users'
         
 
@@ -38,7 +38,7 @@ class MedicationInfo(models.Model):
     medication_name = models.CharField(max_length=30, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'medication_info'
 
 
@@ -53,7 +53,7 @@ class MedicationLog(models.Model):
     taken = models.BooleanField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'medication_log'
         unique_together = (('medication', 'user', 'date'),)
 
@@ -68,6 +68,6 @@ class SymptomLog(models.Model):
     severity = models.CharField(max_length=20, blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'symptom_log'
 
