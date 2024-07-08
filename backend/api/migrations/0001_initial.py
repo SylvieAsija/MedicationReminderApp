@@ -15,7 +15,9 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AuthGroup',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, 
+                                           primary_key=True, serialize=False, 
+                                           verbose_name='ID')),
                 ('name', models.CharField(max_length=150, unique=True)),
             ],
             options={
@@ -36,7 +38,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AuthPermission',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True,
+                                           serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=255)),
                 ('codename', models.CharField(max_length=100)),
             ],
@@ -48,7 +51,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AuthUser',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True,
+                                           serialize=False, verbose_name='ID')),
                 ('password', models.CharField(max_length=128)),
                 ('last_login', models.DateTimeField(blank=True, null=True)),
                 ('is_superuser', models.BooleanField()),
@@ -88,7 +92,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DjangoAdminLog',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True,
+                                           serialize=False, verbose_name='ID')),
                 ('action_time', models.DateTimeField()),
                 ('object_id', models.TextField(blank=True, null=True)),
                 ('object_repr', models.CharField(max_length=200)),
@@ -103,7 +108,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DjangoContentType',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True,
+                                           serialize=False, verbose_name='ID')),
                 ('app_label', models.CharField(max_length=100)),
                 ('model', models.CharField(max_length=100)),
             ],
@@ -128,7 +134,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='DjangoSession',
             fields=[
-                ('session_key', models.CharField(max_length=40, primary_key=True, serialize=False)),
+                ('session_key', models.CharField(max_length=40, primary_key=True,
+                                                 serialize=False)),
                 ('session_data', models.TextField()),
                 ('expire_date', models.DateTimeField()),
             ],
@@ -140,13 +147,20 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='MedicationInfo',
             fields=[
-                ('medication_id', models.AutoField(primary_key=True, serialize=False)),
+                ('medication_id', models.AutoField(primary_key=True, 
+                                                   serialize=False)),
                 ('dosage', models.CharField(max_length=8)),
                 ('medication_time', models.JSONField()),
-                ('misc_information', models.CharField(blank=True, max_length=200, null=True)),
-                ('frequency', models.CharField(blank=True, max_length=20, null=True)),
-                ('medication_name', models.CharField(blank=True, max_length=30, null=True)),
-                ('active_medication', models.BooleanField(blank=True, null=True)),
+                ('misc_information', models.CharField(blank=True, 
+                                                      max_length=200, 
+                                                      null=True)),
+                ('frequency', models.CharField(blank=True, max_length=20, 
+                                               null=True)),
+                ('medication_name', models.CharField(blank=True, 
+                                                     max_length=30, 
+                                                     null=True)),
+                ('active_medication', models.BooleanField(blank=True, 
+                                                          null=True)),
                 ('start_date', models.DateField(blank=True, null=True)),
                 ('end_date', models.DateField(blank=True, null=True)),
             ],
@@ -158,14 +172,16 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Users',
             fields=[
-                ('user_id', models.AutoField(primary_key=True, serialize=False)),
+                ('user_id', models.AutoField(primary_key=True, 
+                                             serialize=False)),
                 ('name', models.CharField(max_length=20)),
                 ('age', models.IntegerField(blank=True, null=True)),
                 ('email', models.CharField(max_length=50)),
                 ('password_hash', models.CharField(max_length=25)),
                 ('phone_number', models.TextField(blank=True, null=True)),
                 ('birthday', models.DateField()),
-                ('blood_type', models.CharField(blank=True, max_length=2, null=True)),
+                ('blood_type', models.CharField(blank=True, max_length=2, 
+                                                null=True)),
                 ('height', models.IntegerField(blank=True, null=True)),
                 ('weight', models.IntegerField(blank=True, null=True)),
             ],
@@ -177,12 +193,17 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SymptomLog',
             fields=[
-                ('symptom_id', models.AutoField(primary_key=True, serialize=False)),
+                ('symptom_id', models.AutoField(primary_key=True, 
+                                                serialize=False)),
                 ('date', models.DateField()),
                 ('time', models.TimeField()),
                 ('description', models.CharField(max_length=200)),
-                ('severity', models.CharField(blank=True, max_length=20, null=True)),
-                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='api.users')),
+                ('severity', models.CharField(blank=True, max_length=20, 
+                                              null=True)),
+                ('user', models.ForeignKey(blank=True, null=True, 
+                                           on_delete=django.db.models
+                                           .deletion.DO_NOTHING, 
+                                           to='api.users')),
             ],
             options={
                 'db_table': 'symptom_log',
@@ -192,13 +213,21 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Refills',
             fields=[
-                ('refill_id', models.AutoField(primary_key=True, serialize=False)),
+                ('refill_id', models.AutoField(primary_key=True, 
+                                               serialize=False)),
                 ('active', models.BooleanField(blank=True, null=True)),
-                ('refill_date', models.CharField(blank=True, max_length=10, null=True)),
+                ('refill_date', models.CharField(blank=True, 
+                                                 max_length=10, null=True)),
                 ('refill_time', models.TimeField(blank=True, null=True)),
                 ('num_meds', models.IntegerField(blank=True, null=True)),
-                ('medication', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='api.medicationinfo')),
-                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='api.users')),
+                ('medication', models.ForeignKey(blank=True, null=True, 
+                                                 on_delete=django.db.models
+                                                 .deletion.DO_NOTHING, 
+                                                 to='api.medicationinfo')),
+                ('user', models.ForeignKey(blank=True, null=True, 
+                                           on_delete=django.db.models
+                                           .deletion.DO_NOTHING, 
+                                           to='api.users')),
             ],
             options={
                 'db_table': 'refills',
@@ -208,7 +237,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='medicationinfo',
             name='user',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='api.users'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db
+                                    .models.deletion.DO_NOTHING, to='api.users'),
         ),
         migrations.CreateModel(
             name='MedicationLog',
@@ -218,8 +248,13 @@ class Migration(migrations.Migration):
                 ('time', models.TimeField()),
                 ('taken', models.BooleanField(blank=True, null=True)),
                 ('colour', models.CharField(blank=True, max_length=20, null=True)),
-                ('medication', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='api.medicationinfo')),
-                ('user', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.DO_NOTHING, to='api.users')),
+                ('medication', models.ForeignKey(blank=True, null=True, 
+                                                 on_delete=django.db.models
+                                                 .deletion.DO_NOTHING, 
+                                                 to='api.medicationinfo')),
+                ('user', models.ForeignKey(blank=True, null=True, 
+                                           on_delete=django.db.models
+                                           .deletion.DO_NOTHING, to='api.users')),
             ],
             options={
                 'db_table': 'medication_log',

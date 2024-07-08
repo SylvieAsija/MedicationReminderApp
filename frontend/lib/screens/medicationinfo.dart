@@ -23,13 +23,13 @@ class _MedicationInfoScreenState extends State<MedicationInfoScreen> {
 
   Future<void> fetchMedicationInfo() async {
     try {
-      print('${widget.userID}');
-      print(
-          'Fetching data from: http://192.168.2.14:8000/api/medication_info/${widget.userID}/');
+      // print('${widget.userID}');
+      // print(
+      //    'Fetching data from: http://192.168.2.14:8000/api/medication_info/${widget.userID}/');
       final response = await http.get(Uri.parse(
           'http://192.168.2.14:8000/api/medication_info/${widget.userID}/'));
-      print('Response status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // print('Response status code: ${response.statusCode}');
+      // print('Response body: ${response.body}');
       if (response.statusCode == 200) {
         setState(() {
           meds = json.decode(response.body);
@@ -39,7 +39,7 @@ class _MedicationInfoScreenState extends State<MedicationInfoScreen> {
             'Failed to load medication info: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching medication info: $e');
+      // print('Error fetching medication info: $e');
       // Handle error state or display an error message to the user
     }
   }
