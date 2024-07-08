@@ -180,7 +180,10 @@ class MedicationLog(models.Model):
 class Refills(models.Model):
     refill_id = models.AutoField(primary_key=True)
     user = models.ForeignKey('Users', models.DO_NOTHING, blank=True, null=True)
-    medication = models.ForeignKey(MedicationInfo, models.DO_NOTHING, blank=True, null=True)
+    medication = models.ForeignKey(MedicationInfo, 
+                                   models.DO_NOTHING, 
+                                   blank=True, 
+                                   null=True)
     active = models.BooleanField(blank=True, null=True)
     refill_date = models.CharField(max_length=10, blank=True, null=True)
     refill_time = models.TimeField(blank=True, null=True)
