@@ -14,14 +14,13 @@ def test_page(request):
                         django setup works')
 
 
-# def api_home(request):
-#     return render(request, os.path.join(settings.FRONTEND_DIR, 'lib',
-#                   'main.dart'))
-
 def api_home(request):
-    
+    return render(request, os.path.join(settings.FRONTEND_DIR, 'lib',
+                  'main.dart'))
+
+def get_medication_info(request, user_id):
     # THIS IS A SAMPLE USER, MUST BE EDITED
-    user_id = 1 
+    # user_id = 1 
     if request.method == 'GET':
         meds = MedicationInfo.objects.filter(user_id=user_id)
         data = list(meds.values())
