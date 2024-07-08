@@ -18,6 +18,7 @@ def api_home(request):
     return render(request, os.path.join(settings.FRONTEND_DIR, 'lib',
                   'main.dart'))
 
+
 def get_medication_info(request, user_id):
     # THIS IS A SAMPLE USER, MUST BE EDITED
     # user_id = 1 
