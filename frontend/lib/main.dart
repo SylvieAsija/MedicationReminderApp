@@ -1,9 +1,27 @@
-// start point for dart files
-// I hate workflow setup
-// This is pain
-// Every commit and test prolongs the pain
-// Is it too late to make everything in JS
-// Really hope it works this time
-// MEOW MROW
-// If this works I'm gonna be sad
-// I think I see the light
+//main.dart
+
+import 'package:flutter/material.dart';
+import 'screens/homescreen.dart';
+import 'screens/secondscreen.dart';
+import 'screens/medicationinfo.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomeScreen(),
+        '/second': (context) => const SecondScreen(),
+        '/medication_info': (context) => const MedicationInfoScreen(userID: 1),
+      },
+    );
+  }
+}
