@@ -32,14 +32,17 @@ class Migration(migrations.Migration):
                 assigning them.', 
                                                      verbose_name='superuser\
                                                          status')),
-                ('username', models.CharField(error_messages={'unique':'A\
+                ('username', models.CharField(error_messages={'unique': 'A\
                 user with that username already exists.'}, 
                                               help_text='Required. 150\
                 characters or fewer. Letters, digits and @/./+/-/_ only.',
                                               max_length=150, 
                                               unique=True, 
-                                              validators=[django.contrib.auth.
-                validators.UnicodeUsernameValidator()], 
+                                              validators=[
+                                                  django.contrib.auth.
+                                                  validators.
+                                                  UnicodeUsernameValidator()
+                                              ], 
                                               verbose_name='username')),
                 ('first_name', models.CharField(blank=True,
                                                 max_length=150,
@@ -53,7 +56,7 @@ class Migration(migrations.Migration):
                 ('is_staff', models.BooleanField(default=False,
                                                  help_text='Designates\
                 whether the user can log into this admin site.', 
-                                                  verbose_name='staff\
+                                                 verbose_name='staff\
                                                       status')),
                 ('is_active', models.BooleanField(default=True, 
                                                   help_text='Designates\
@@ -89,11 +92,14 @@ class Migration(migrations.Migration):
                 ('user_permissions', models.ManyToManyField(blank=True, 
                                                             help_text='\
                 Specific permissions for this user.', 
-                                                  related_name='user_set', 
-                                                  related_query_name='user', 
-                                                  to='auth.permission', 
-                                                  verbose_name='user\
-                                                      permissions')),
+                                                            related_name=
+                                                            'user_set', 
+                                                            related_query_name=
+                                                            'user', 
+                                                            to='auth.\
+                                                                permission', 
+                                                            verbose_name='user\
+                                                                permissions')),
             ],
             options={
                 'db_table': 'users',
