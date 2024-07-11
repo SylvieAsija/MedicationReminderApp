@@ -32,30 +32,29 @@ class Migration(migrations.Migration):
                 assigning them.', 
                                                      verbose_name='superuser\
                                                          status')),
-                ('username', models.CharField(error_messages={'unique': 
-                'A user with that username already exists.'}, 
+                ('username', models.CharField(error_messages={'unique':'A\
+                user with that username already exists.'}, 
                                               help_text='Required. 150\
                 characters or fewer. Letters, digits and @/./+/-/_ only.',
-                                                      max_length=150, 
-                                                      unique=True, 
-                                                      validators=[django.
-                contrib.auth.validators.UnicodeUsernameValidator()], 
-                                                      verbose_name=
-                                                      'username')),
-                ('first_name', models.CharField(blank=True, 
-                                                max_length=150, 
+                                              max_length=150, 
+                                              unique=True, 
+                                              validators=[django.contrib.auth.
+                validators.UnicodeUsernameValidator()], 
+                                              verbose_name='username')),
+                ('first_name', models.CharField(blank=True,
+                                                max_length=150,
                                                 verbose_name='first name')),
-                ('last_name', models.CharField(blank=True, 
-                                               max_length=150, 
+                ('last_name', models.CharField(blank=True,
+                                               max_length=150,
                                                verbose_name='last name')),
-                ('email', models.EmailField(blank=True, 
+                ('email', models.EmailField(blank=True,
                                             max_length=254, 
                                             verbose_name='email address')),
-                ('is_staff', models.BooleanField(default=False, 
+                ('is_staff', models.BooleanField(default=False,
                                                  help_text='Designates\
                 whether the user can log into this admin site.', 
-                                                  verbose_name=
-                                                  'staff status')),
+                                                  verbose_name='staff\
+                                                      status')),
                 ('is_active', models.BooleanField(default=True, 
                                                   help_text='Designates\
                 whether this user should be treated as active.\
@@ -63,8 +62,8 @@ class Migration(migrations.Migration):
                                                   verbose_name='active')),
                 ('date_joined', models.DateTimeField(default=django.utils.
                                                      timezone.now, 
-                                                     verbose_name=
-                                                     'date joined')),
+                                                     verbose_name='date\
+                                                         joined')),
                 ('user_id', models.AutoField(primary_key=True, 
                                              serialize=False)),
                 ('age', models.IntegerField(blank=True, 
@@ -88,12 +87,13 @@ class Migration(migrations.Migration):
                                                   to='auth.group', 
                                                   verbose_name='groups')),
                 ('user_permissions', models.ManyToManyField(blank=True, 
-                                                            help_text=
-                'Specific permissions for this user.', 
-                    related_name='user_set', 
-                    related_query_name='user', 
-                    to='auth.permission', 
-                    verbose_name='user permissions')),
+                                                            help_text='\
+                Specific permissions for this user.', 
+                                                  related_name='user_set', 
+                                                  related_query_name='user', 
+                                                  to='auth.permission', 
+                                                  verbose_name='user\
+                                                      permissions')),
             ],
             options={
                 'db_table': 'users',
