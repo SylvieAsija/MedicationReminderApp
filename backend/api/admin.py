@@ -4,11 +4,14 @@ from .models import MedicationInfo, MedicationLog
 from .models import Refills, SymptomLog
 from .models import Users
 
+
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (
-        (None, {'fields': ('age', 'phone_number', 'birthday', 'blood_type', 'height', 'weight')}),
+        (None, {'fields': ('age', 'phone_number', 'birthday', 
+                           'blood_type', 'height', 'weight')}),
     )
+
 
 admin.site.register(Users, UserAdmin)
 admin.site.register(MedicationInfo)
