@@ -41,8 +41,7 @@ class Migration(migrations.Migration):
                                               validators=[
                                                   django.contrib.auth.
                                                   validators.
-                                                  UnicodeUsernameValidator()
-                                              ], 
+                                                  UnicodeUsernameValidator()], 
                                               verbose_name='username')),
                 ('first_name', models.CharField(blank=True,
                                                 max_length=150,
@@ -92,10 +91,10 @@ class Migration(migrations.Migration):
                 ('user_permissions', models.ManyToManyField(blank=True, 
                                                             help_text='\
                 Specific permissions for this user.', 
-                                                            related_name=
-                                                            'user_set', 
-                                                            related_query_name=
-                                                            'user', 
+                                                            related_name='\
+                                                                user_set', 
+                                                            related_query_name='\
+                                                                user', 
                                                             to='auth.\
                                                                 permission', 
                                                             verbose_name='user\
