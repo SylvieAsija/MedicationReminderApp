@@ -24,22 +24,22 @@ class Migration(migrations.Migration):
                                               verbose_name='password')),
                 ('last_login', models.DateTimeField(blank=True, 
                                                     null=True, 
-                                                    verbose_name=
-                                                    'last login')),
+                                                    verbose_name='last\
+                                                        login')),
                 ('is_superuser', models.BooleanField(default=False, 
                                                      help_text='Designates\
                 that this user has all permissions without explicitly\
                 assigning them.', 
                                                      verbose_name='superuser\
                                                          status')),
-                ('username', models.CharField(error_messages=
-                {'unique': 'A user with that username already exists.'}, 
-                help_text='Required. 150 characters or fewer. Letters,\
-                digits and @/./+/-/_ only.', 
+                ('username', models.CharField(error_messages={'unique': 
+                'A user with that username already exists.'}, 
+                                              help_text='Required. 150\
+                characters or fewer. Letters, digits and @/./+/-/_ only.',
                                                       max_length=150, 
                                                       unique=True, 
-                validators=[django.contrib.auth.validators.
-                            UnicodeUsernameValidator()], 
+                                                      validators=[django.
+                contrib.auth.validators.UnicodeUsernameValidator()], 
                                                       verbose_name=
                                                       'username')),
                 ('first_name', models.CharField(blank=True, 
