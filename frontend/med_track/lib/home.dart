@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:med_track/components/medication_item.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -7,20 +8,15 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My app', style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        )),
-        backgroundColor: Colors.brown[700],
-        centerTitle: true,
+        title: const Text('Med Track'),
+        actions: const [Text('settings')],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
         Container(
-          color: Colors.brown[200],
-          padding: const EdgeInsets.all(20),
-          child: const Text ('How I like my coffee...'),
+          padding: const EdgeInsets.all(10),
+          child: const MedicationItem()
         ),
         Container(
           color: Colors.brown[100],
