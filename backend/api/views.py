@@ -14,7 +14,7 @@ def test_page(request):
                         django setup works')
 
 
-def api_home(request):
+def landing_page(request):
     return render(request, os.path.join(settings.FRONTEND_DIR, 'lib',
                   'main.dart'))
 
