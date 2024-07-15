@@ -8,10 +8,12 @@ Frontend:
 - Framework: React Native (Typescript)
 - State Management: Redux
 - HTTP Client: HTTP
+
 Backend: 
 - Framework: Django (python)
 - Database ORM: Django Rest
 - Authentication: Built in Django
+  
 Database: PostgreSQL
 Hosting: TBD but AWS and Firebase seem like promising options 
 
