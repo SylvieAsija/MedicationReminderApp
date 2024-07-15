@@ -69,6 +69,7 @@ TEMPLATES = [
             FRONTEND_DIR,
             os.path.join(FRONTEND_DIR, 'screens'),
             os.path.join(FRONTEND_DIR, 'components'),
+            os.path.join(FRONTEND_DIR, 'assets'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
