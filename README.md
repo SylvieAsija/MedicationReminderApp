@@ -4,9 +4,18 @@
 ![example workflow](https://github.com/SylvieAsija/MedicationReminderApp/actions/workflows/react_native_linter.yml/badge.svg?branch=main)
 
 Frontend Design: Figma
-Frontend/Backend SDK: Flutter
-Database: TBD
-Not sure if we need a server or not
+Frontend: 
+- Framework: React Native (Typescript)
+- State Management: Redux
+- HTTP Client: HTTP
+
+Backend: 
+- Framework: Django (python)
+- Database ORM: Django Rest
+- Authentication: Built in Django
+  
+Database: PostgreSQL
+Hosting: TBD but AWS and Firebase seem like promising options 
 
 Initial Ideas:
 
