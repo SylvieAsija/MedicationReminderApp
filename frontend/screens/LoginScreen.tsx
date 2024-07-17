@@ -1,3 +1,4 @@
+// LoginScreen.tsx
 import React, { PropsWithChildren, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
@@ -18,28 +19,39 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/api/token/', {
-                email: email,
+            const response = await axios.post('http://192.168.2.14:8000/api/token/', { 
+                username: email,
                 password: password,
             });
+            console.log(response.data);
 
             const { access, refresh } = response.data;
+            try {
+                await SecureStore.setItem('accessToken', access);
+                await SecureStore.setItem('refreshToken', refresh);
+    
+                navigation.navigate('Home');
+            } catch (error) {
+                console.error('Error setting tokens: ', error);
+                Alert.alert('Storage error');
+            }
 
-            await SecureStore.setItemAsync('accessToken', access);
-            await SecureStore.setItemAsync('refreshToken', refresh);
-
-            navigation.navigate('Home');
         } catch (error) {
             Alert.alert('Login Failed', 'Invalid email or password');
         }
     };
 
+    const navSignup = () => {
+        navigation.navigate('Signup');
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Get Started Now</Text>
+            <Button title='Signup' onPress={navSignup} />
             <TextInput 
                 style={styles.input}
-                placeholder='janedoe@email.com'
+                placeholder='email'
                 value={email}
                 onChangeText={setEmail}
                 keyboardType='email-address'
@@ -75,6 +87,9 @@ const styles = StyleSheet.create ({
         marginBottom: 12,
         paddingHorizontal: 8,
     },
+    button: {
+        alignSelf: 'center',
+    }
 });
 
 export default LoginScreen;

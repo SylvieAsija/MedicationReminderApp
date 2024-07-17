@@ -11,7 +11,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-
 class Users(AbstractUser):
     user_id = models.AutoField(primary_key=True)
     age = models.IntegerField(blank=True, null=True)
