@@ -1,9 +1,9 @@
 // App.tsx
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-//import HomeScreen from '../screens/HomeScreen';
-import LoginScreen from '../screens/LoginScreen';
-import Signup from '../screens/SignUp';
+import HomeScreen from '@/screens/HomeScreen';
+import LoginScreen from '@/screens/LoginScreen';
+import Signup from '@/screens/SignUp';
 
 type RootStackParamList = {
     Login: undefined;
@@ -18,7 +18,7 @@ const App: React.FC = () => {
         <Stack.Navigator initialRouteName='Login'>
             <Stack.Screen name='Login' component={LoginScreen} />
             <Stack.Screen name='Signup' component={Signup} />
-            {/* <Stack.Screen name='Home' component={HomeScreen} /> */}
+            <Stack.Screen name='Home' component={HomeScreen} />
         </Stack.Navigator>
     );
 };
