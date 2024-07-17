@@ -5,7 +5,28 @@ from django.http import HttpResponse, JsonResponse
 from django.conf import settings
 import os
 
+from django.contrib.auth import authenticate
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from .models import MedicationInfo
+
+@api_view(['POST'])
+def login(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+
+    user = authenticate(request, username=email, password=password)
+    
+    if user is not None:
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            'access': str(refresh.access_token),
+            'refresh': str(refresh)
+        })
+    else: 
+        return Response({'error': 'Invalid credentials'}, status=400)
 
 
 # Create your views here.
