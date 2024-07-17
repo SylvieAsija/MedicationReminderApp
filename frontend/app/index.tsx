@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '@/screens/LoginScreen';
-import Signup from '@/screens/SignupScreen';
+import SignupScreen from '@/screens/SignupScreen';
 import HomePage from '@/screens/HomeScreen';
 
 type RootStackParamList = {
@@ -17,7 +17,7 @@ const App: React.FC = () => {
     return (
         <Stack.Navigator initialRouteName='Login'>
             <Stack.Screen name='Login' component={LoginScreen} />
-            <Stack.Screen name='Signup' component={Signup} />
+            <Stack.Screen name='Signup' component={SignupScreen} />
             <Stack.Screen name='Home' component={HomePage} />
         </Stack.Navigator>
     );
