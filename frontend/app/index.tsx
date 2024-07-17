@@ -3,7 +3,7 @@ import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '@/screens/LoginScreen';
 import SignupScreen from '@/screens/SignupScreen';
-import HomePage from '@/screens/HomeScreen';
+import HomePage from '@/screens/HomePage';
 
 type RootStackParamList = {
     Login: undefined;
