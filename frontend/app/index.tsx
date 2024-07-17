@@ -1,9 +1,9 @@
 // App.tsx
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from '@/screens/HomeScreen';
 import LoginScreen from '@/screens/LoginScreen';
 import Signup from '@/screens/SignUp';
+import HomeScreen from '@/screens/HomeScreen';
 
 type RootStackParamList = {
     Login: undefined;
