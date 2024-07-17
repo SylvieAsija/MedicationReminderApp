@@ -1,11 +1,10 @@
-//HomeScreen.tsx
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
 const HomeScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Home Screen</Text>
+      <Text style={styles.title}>Home Page</Text>
     </View>
   );
 };
