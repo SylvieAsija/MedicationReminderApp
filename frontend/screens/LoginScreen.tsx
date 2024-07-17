@@ -1,5 +1,5 @@
 // LoginScreen.tsx
-import React, { PropsWithChildren, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
@@ -37,6 +37,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             }
 
         } catch (error) {
+            console.error('Error handling response: ', error);
             Alert.alert('Login Failed', 'Invalid email or password');
         }
     };
