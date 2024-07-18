@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useFonts, Inter_500Medium } from "@expo-google-fonts/inter";
 
 interface Props {
     isLogin: boolean;
@@ -8,22 +9,29 @@ interface Props {
 
 const LoginButtonToggle: React.FC<Props> = ({ isLogin, setIsLogin }) => {
 
-    return (
-        <View style={styles.buttonContainer}>
-            <TouchableOpacity
-                style={[styles.button, styles.left, isLogin && styles.active]}
-                onPress={() => setIsLogin(true)}
-                >
-                <Text style={[styles.buttonText, isLogin && styles.activeButtonText]}>Log In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={[styles.button,styles.right, !isLogin && styles.active]}
-                onPress={() => setIsLogin(false)}
-                >
-                <Text style={[styles.buttonText, !isLogin && styles.activeButtonText]}>Sign Up</Text>
-            </TouchableOpacity>
-        </View>
-    );
+    let [fonts] = useFonts({Inter_500Medium});
+
+    if (!fonts) 
+        return <View></View>
+    else {
+        return (
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                    style={[styles.button, styles.left, isLogin && styles.active]}
+                    onPress={() => setIsLogin(true)}
+                    >
+                    <Text style={[styles.buttonText, isLogin && styles.activeButtonText]}>Log In</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={[styles.button,styles.right, !isLogin && styles.active]}
+                    onPress={() => setIsLogin(false)}
+                    >
+                    <Text style={[styles.buttonText, !isLogin && styles.activeButtonText]}>Sign Up</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
+    
 };
 
 const styles = StyleSheet.create ({
@@ -55,7 +63,7 @@ const styles = StyleSheet.create ({
     buttonText: {
         color: '#989898',
         alignSelf: 'center',
-        fontFamily: 'InterDisplay-Medium'
+        fontFamily: 'Inter_500Medium'
     },
     activeButtonText: {
         color: '#333333',
