@@ -11,16 +11,16 @@ const LoginButtonToggle: React.FC<Props> = ({ isLogin, setIsLogin }) => {
     return (
         <View style={styles.buttonContainer}>
             <TouchableOpacity
-                style={[styles.button, isLogin && styles.active]}
+                style={[styles.button, styles.left, isLogin && styles.active]}
                 onPress={() => setIsLogin(true)}
                 >
                 <Text style={[styles.buttonText, isLogin && styles.activeButtonText]}>Log In</Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={[styles.button, !isLogin && styles.active]}
+                style={[styles.button,styles.right, !isLogin && styles.active]}
                 onPress={() => setIsLogin(false)}
                 >
-                <Text style={[styles.buttonText, !isLogin && styles.activeButtonText]}>Signup</Text>
+                <Text style={[styles.buttonText, !isLogin && styles.activeButtonText]}>Sign Up</Text>
             </TouchableOpacity>
         </View>
     );
@@ -32,7 +32,8 @@ const styles = StyleSheet.create ({
         flexDirection: 'row',
         alignSelf: 'center',
         justifyContent: 'center',
-        backgroundColor: '#F5F6F9'
+        backgroundColor: '#F5F6F9',
+        borderRadius: 5,
     },
     button: {
         textAlign: 'center',
@@ -40,14 +41,21 @@ const styles = StyleSheet.create ({
         flex: 2,
         marginBottom: 5,
         marginTop: 5,
+        borderRadius: 5,
+    },
+    left: {
         marginLeft: 5,
+    },
+    right: {
+        marginRight: 5,
     },
     active: {
         backgroundColor: '#FFFFFF',
     },
     buttonText: {
         color: '#989898',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        fontFamily: 'InterDisplay-Medium'
     },
     activeButtonText: {
         color: '#333333',
