@@ -1,6 +1,6 @@
 // LoginScreen.tsx
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -67,11 +67,13 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     else {
         return (
             <View style={styles.container}>
-                    <Text style={styles.title}>Get Started Now</Text>
-                    <Text style={styles.description}>Create an account or log in to use DoseUp</Text>
-                    <View style={styles.buttonContainer}>
-                        <LoginButtonToggle isLogin={isLogin} setIsLogin={handleButtonToggle} /> 
-                    </View>
+                <Image source={require('@/assets/images/pill_logo.png')} 
+                style={{width: 100, height: 100, alignSelf: 'center'}}/>
+                <Text style={styles.title}>Get Started Now</Text>
+                <Text style={styles.description}>Create an account or log in to use DoseUp</Text>
+                <View style={styles.buttonContainer}>
+                    <LoginButtonToggle isLogin={isLogin} setIsLogin={handleButtonToggle} /> 
+                </View>
                 <View>
                     <View style={styles.inputContainer}>
                         <TextInput 
@@ -100,7 +102,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <LinearGradient colors={['#50E3D1', '#46D6CF']} style={styles.button}>
+                    <LinearGradient colors={['#50E3C2', '#46D6CF']} style={styles.button}>
                         <TouchableOpacity onPress={handleLogin} >
                                 <Text style={styles.buttonText}>Log In</Text>
                         </TouchableOpacity>                        
@@ -123,12 +125,14 @@ const styles = StyleSheet.create ({
         textAlign: 'center',
         marginTop: 20,
         fontFamily: 'Inter_700Bold',
+        color: '#333333'
     },
     description: {
         fontSize: 12,
         textAlign: 'center',
         fontFamily: 'Inter_500Medium',
         marginBottom: 10,
+        color: '#333333'
     },
     buttonContainer: {
         flexDirection: 'row',
@@ -170,11 +174,10 @@ const styles = StyleSheet.create ({
         alignSelf: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        backgroundColor: '#46D6CF',
         width: '95%',
         height: '20%',
         marginTop: 10,
-        shadowColor: '#253EA7',
+        shadowColor: '#782EEE',
         shadowOpacity: 48,
         shadowRadius: 1,
         borderColor: '#FFFFFF',
@@ -188,7 +191,7 @@ const styles = StyleSheet.create ({
     },
     icon: {
         paddingBottom: 5
-    }
+    },
 });
 
 export default LoginScreen;
