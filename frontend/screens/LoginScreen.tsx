@@ -8,6 +8,7 @@ import LoginButtonToggle from '@/components/loginSignupToggle';
 import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import { PlusJakartaSans_500Medium } from '@expo-google-fonts/plus-jakarta-sans';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type RootStackParamList = {
     Login: undefined;
@@ -99,10 +100,11 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-
-                    <TouchableOpacity style={styles.button} onPress={handleLogin} >
-                        <Text style={styles.buttonText}>Log In</Text>
-                    </TouchableOpacity>
+                    <LinearGradient colors={['#50E3D1', '#46D6CF']} style={styles.button}>
+                        <TouchableOpacity onPress={handleLogin} >
+                                <Text style={styles.buttonText}>Log In</Text>
+                        </TouchableOpacity>                        
+                    </LinearGradient>
                 </View>
             </View>
         )
@@ -133,6 +135,7 @@ const styles = StyleSheet.create ({
         alignSelf: 'center',
         borderRadius: 6,
         marginBottom: 50,
+        width: '100%',
     },
     inputContainer: {
         width: '100%',
@@ -166,17 +169,22 @@ const styles = StyleSheet.create ({
     button: {
         alignSelf: 'center',
         justifyContent: 'center',
-        borderRadius: 5,
+        borderRadius: 10,
         backgroundColor: '#46D6CF',
-        width: '100%',
+        width: '95%',
         height: '20%',
         marginTop: 10,
+        shadowColor: '#253EA7',
+        shadowOpacity: 48,
+        shadowRadius: 1,
+        borderColor: '#FFFFFF',
+        borderWidth: 1,
     },
     buttonText: {
         alignSelf: 'center',
         fontFamily: 'Inter_600SemiBold',
         fontSize: 14,
-        color: '#FFFFFF'
+        color: '#FFFFFF',
     },
     icon: {
         paddingBottom: 5
