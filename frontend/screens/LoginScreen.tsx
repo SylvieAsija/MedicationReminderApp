@@ -91,6 +91,7 @@ const styles = StyleSheet.create ({
         marginBottom: 16,
         textAlign: 'center',
         marginTop: 20,
+        fontFamily: 'Inter',
     },
     description: {
         fontSize: 16,
