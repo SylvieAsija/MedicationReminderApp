@@ -5,8 +5,9 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import LoginButtonToggle from '@/components/loginSignupToggle';
-import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter'
-import { PlusJakartaSans_500Medium } from '@expo-google-fonts/plus-jakarta-sans'
+import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
+import { PlusJakartaSans_500Medium } from '@expo-google-fonts/plus-jakarta-sans';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 type RootStackParamList = {
     Login: undefined;
@@ -22,6 +23,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
 
     const handleLogin = async () => {
@@ -49,11 +51,15 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         }
     };
 
-    const handleToggle = (isLogin: boolean) => {
+    const handleButtonToggle = (isLogin: boolean) => {
         setIsLogin(isLogin);
         if (!isLogin)
             navigation.navigate('Signup');
     }
+
+    const handlePasswordToggle = () => {
+        setShowPassword(!showPassword);
+    };
 
     if (!fonts) 
         return <View></View>
@@ -63,24 +69,37 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                     <Text style={styles.title}>Get Started Now</Text>
                     <Text style={styles.description}>Create an account or log in to use DoseUp</Text>
                     <View style={styles.buttonContainer}>
-                        <LoginButtonToggle isLogin={isLogin} setIsLogin={handleToggle} /> 
+                        <LoginButtonToggle isLogin={isLogin} setIsLogin={handleButtonToggle} /> 
                     </View>
                 <View>
-                    <TextInput 
-                        style={styles.input}
-                        placeholder='email'
-                        value={email}
-                        onChangeText={setEmail}
-                        keyboardType='email-address'
-                        autoCapitalize='none'
-                    />
-                    <TextInput 
-                        style={styles.input}
-                        placeholder='password'
-                        value={password}
-                        onChangeText={setPassword}
-                        secureTextEntry            
-                    />
+                    <View style={styles.inputContainer}>
+                        <TextInput 
+                            style={styles.input}
+                            placeholder='Enter Email'
+                            value={email}
+                            onChangeText={setEmail}
+                            keyboardType='email-address'
+                            autoCapitalize='none'
+                        />
+                        <View style={styles.passwordContainer}>
+                            <TextInput 
+                                secureTextEntry={!showPassword}  
+                                value={password}
+                                onChangeText={setPassword}
+                                style={styles.input}
+                                placeholder='Enter Password'
+                            />
+                            <TouchableOpacity onPress={handlePasswordToggle} style={styles.iconContainer}>
+                                <MaterialCommunityIcons
+                                    name={showPassword ? 'eye' : 'eye-off'}
+                                    size={20}
+                                    color='#AAAAAA'
+                                    style={styles.icon}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
                     <TouchableOpacity style={styles.button} onPress={handleLogin} >
                         <Text style={styles.buttonText}>Log In</Text>
                     </TouchableOpacity>
@@ -115,13 +134,34 @@ const styles = StyleSheet.create ({
         borderRadius: 6,
         marginBottom: 50,
     },
+    inputContainer: {
+        width: '100%',
+        flexDirection: 'column',
+        alignSelf: 'center',
+        alignItems: 'baseline',
+        paddingHorizontal: 10
+        
+    },
+    passwordContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%'
+    },
     input: {
         height: 40,
+        width: '100%',
         borderColor: '#ccc',
         borderWidth: 1,
         marginBottom: 10,
-        paddingHorizontal: 8,
-        borderRadius: 5
+        paddingLeft: 10,
+        borderRadius: 10,
+        fontSize: 16,
+        alignSelf: 'center',
+    },
+    iconContainer: {
+        position: 'absolute',
+        right: 10,
+        top: 10
     },
     button: {
         alignSelf: 'center',
@@ -129,7 +169,8 @@ const styles = StyleSheet.create ({
         borderRadius: 5,
         backgroundColor: '#46D6CF',
         width: '100%',
-        height: '20%'
+        height: '20%',
+        marginTop: 10,
     },
     buttonText: {
         alignSelf: 'center',
@@ -137,10 +178,8 @@ const styles = StyleSheet.create ({
         fontSize: 14,
         color: '#FFFFFF'
     },
-    label: {
-        alignSelf: 'baseline',
-        fontFamily: 'PlusJakartaSans_500Medium',
-        fontSize: 12
+    icon: {
+        paddingBottom: 5
     }
 });
 
