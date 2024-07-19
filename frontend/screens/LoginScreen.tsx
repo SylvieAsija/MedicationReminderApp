@@ -29,17 +29,18 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://192.168.2.14:8000/api/token/', { 
-                username: email,
+            const response = await axios.post('http://192.168.2.14:8000/api/login/', { 
+                email: email,
                 password: password,
             });
             console.log(response.data);
 
             const { access, refresh } = response.data;
+            console.log(access, response);
             try {
                 await SecureStore.setItem('accessToken', access);
                 await SecureStore.setItem('refreshToken', refresh);
-    
+
                 navigation.navigate('Home');
             } catch (error) {
                 console.error('Error setting tokens: ', error);

@@ -19,7 +19,7 @@ def login(request):
 
     print(f"Received login request with email: {email}, password: {password}")
     user = authenticate(request, username=email, password=password)
-    
+
     if user is not None:
         refresh = RefreshToken.for_user(user)
         return Response({
