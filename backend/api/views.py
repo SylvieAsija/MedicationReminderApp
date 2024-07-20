@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from rest_framework.views import APIView
@@ -67,12 +67,14 @@ def signup(request):
 def logout(request):
     return
 
-class userInfoView(APIView):
-    permission_classes = [IsAuthenticated]
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_name(request):
+    user = request.user
+    print(user)
     
-    def get(self, request):
-        user = request.user
+    if user.is_authenticated:
         return Response({
             'first_name': user.first_name,
             'last_name': user.last_name
-        })
+    }, status=status.HTTP_200_OK)
