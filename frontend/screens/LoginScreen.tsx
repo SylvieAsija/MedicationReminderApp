@@ -35,8 +35,8 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             });
             const { access, refresh } = response.data;
             try {
-                await SecureStore.setItemAsync('accessToken', access);
-                await SecureStore.setItemAsync('refreshToken', refresh);
+                await SecureStore.setItemAsync('access_token', access);
+                await SecureStore.setItemAsync('refresh_token', refresh);
 
                 navigation.navigate('Home');
             } catch (error) {

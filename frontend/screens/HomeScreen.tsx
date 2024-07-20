@@ -11,23 +11,24 @@ const HomeScreen: React.FC = () => {
   useEffect(() => {
     const getName = async () => {
       try {
-        const token = await SecureStore.getItemAsync('accessToken');
+        const token = await SecureStore.getItemAsync('access_token');
         if (!token) {
           console.error('No access token found');
           return;
         }
-        console.log('token exists')
+        console.log('token exists: ', token)
         const response = await axios.get('http://192.168.2.14:8000/user/', {
           headers: {
             Authorization: `Bearer ${token}`
           }
         });
-        const { firstname, lastname } = response.data;
+        const { first_name, last_name } = response.data;
   
-        setFirstName(firstname);
-        setLastName(lastname);
-      } catch {
-
+        setFirstName(first_name);
+        setLastName(last_name);
+        console.log(`Welcome ${first_name} ${last_name}`);
+      } catch (error) {
+        console.log('Error fetching name data: ', error)
       }
     };
 
