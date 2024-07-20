@@ -1,21 +1,30 @@
 # views.py
 
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.conf import settings
 import os
 
-from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, get_user_model
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
-from .models import MedicationInfo
+Users = get_user_model()
 
 @api_view(['POST'])
 def login(request):
     email = request.data.get('email')
     password = request.data.get('password')
+    
+    if not email or not password:
+        return Response({'error': 'All fields are required'},status=status.HTTP_400_BAD_REQUEST)
+
 
     print(f"Received login request with email: {email}, password: {password}")
     user = authenticate(request, username=email, password=password)
@@ -25,25 +34,45 @@ def login(request):
         return Response({
             'access': str(refresh.access_token),
             'refresh': str(refresh)
-        })
+        }, status=status.HTTP_200_OK)
     else: 
         return Response({'error': 'Invalid credentials'}, status=400)
 
 
-# Create your views here.
-def test_page(request):
-    return HttpResponse('This is a test page to verify if the \
-                        django setup works')
+@api_view(['POST'])
+def signup(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+    passwordConfirm = request.data.get('passwordConfirm')
+    
+    if not email or not password or not passwordConfirm:
+        return Response({'error': 'All fields are required'},status=status.HTTP_400_BAD_REQUEST)
+    
+    if password != passwordConfirm:
+        return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    if Users.objects.filter(username=email).exists():
+        return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    user = Users.objects.create_user(username=email, email=email, password=password)
+    
+    refresh = RefreshToken.for_user(user)
+    
+    return Response({
+        'access': str(refresh.access_token),
+        'refresh': str(refresh)
+    }, status=status.HTTP_201_CREATED)
 
 
-def landing_page(request):
-    return render(request, os.path.join(settings.FRONTEND_DIR, 'App.tsx'))
+def logout(request):
+    return
 
-
-def get_medication_info(request, user_id):
-    # THIS IS A SAMPLE USER, MUST BE EDITED
-    # user_id = 1 
-    if request.method == 'GET':
-        meds = MedicationInfo.objects.filter(user_id=user_id)
-        data = list(meds.values())
-        return JsonResponse(data, safe=False)
+class userInfoView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        user = request.user
+        return Response({
+            'first_name': user.first_name,
+            'last_name': user.last_name
+        })

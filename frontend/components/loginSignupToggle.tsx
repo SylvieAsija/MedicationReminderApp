@@ -23,7 +23,7 @@ const LoginButtonToggle: React.FC<Props> = ({ isLogin, setIsLogin }) => {
                     <Text style={[styles.buttonText, isLogin && styles.activeButtonText]}>Log In</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.button,styles.right, !isLogin && styles.active]}
+                    style={[styles.button, styles.right, !isLogin && styles.active]}
                     onPress={() => setIsLogin(false)}
                     >
                     <Text style={[styles.buttonText, !isLogin && styles.activeButtonText]}>Sign Up</Text>
