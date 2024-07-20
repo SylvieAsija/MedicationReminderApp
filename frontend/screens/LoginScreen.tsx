@@ -1,5 +1,5 @@
 // LoginScreen.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
@@ -29,17 +29,14 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://192.168.2.14:8000/api/login/', { 
+            const response = await axios.post('http://192.168.2.14:8000/login/', { 
                 email: email,
                 password: password,
             });
-            console.log(response.data);
-
             const { access, refresh } = response.data;
-            console.log(access, response);
             try {
-                await SecureStore.setItem('accessToken', access);
-                await SecureStore.setItem('refreshToken', refresh);
+                await SecureStore.setItemAsync('accessToken', access);
+                await SecureStore.setItemAsync('refreshToken', refresh);
 
                 navigation.navigate('Home');
             } catch (error) {
@@ -54,8 +51,9 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     };
 
     const handleButtonToggle = (isLogin: boolean) => {
-        setIsLogin(isLogin);
-        if (!isLogin)
+        if (isLogin) 
+            navigation.navigate('Login');
+        if (!isLogin) 
             navigation.navigate('Signup');
     }
 

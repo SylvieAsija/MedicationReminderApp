@@ -1,5 +1,5 @@
-// LoginScreen.tsx
-import React, { useState } from 'react';
+// SignupScreen.tsx
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
@@ -16,7 +16,7 @@ type RootStackParamList = {
     Home: undefined;
 };
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Login'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
 
 const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
@@ -24,14 +24,17 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordConfirm, setPasswordConfirm] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [isLogin, setIsLogin] = useState(true);
+    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+    const [isLogin, setIsLogin] = useState(false);
 
     const handleSignUp = async () => {
         try {
-            const response = await axios.post('http://192.168.2.14:8000/api/login/', { 
+            const response = await axios.post('http://192.168.2.14:8000/signup/', { 
                 email: email,
                 password: password,
+                passwordConfirm: passwordConfirm,
             });
             console.log(response.data);
 
@@ -49,19 +52,24 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
         } catch (error) {
             console.error('Error handling response: ', error);
-            Alert.alert('Login Failed', 'Invalid email or password');
+            Alert.alert('Login Failed', 'Invalid email or password or password confirm');
         }
     };
 
     const handleButtonToggle = (isLogin: boolean) => {
-        setIsLogin(isLogin);
+        if (isLogin)
+          navigation.navigate('Login');
         if (!isLogin)
-            navigation.navigate('Login');
+          navigation.navigate('Signup')
     }
 
     const handlePasswordToggle = () => {
         setShowPassword(!showPassword);
     };
+
+    const handlePasswordConfirmToggle = () => {
+      setShowPasswordConfirm(!showPasswordConfirm);
+  };
 
     if (!fonts) 
         return <View></View>
@@ -70,7 +78,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             <View style={styles.container}>
                 <Image source={require('@/assets/images/pill_logo.png')} 
                 style={{width: 100, height: 100, alignSelf: 'center'}}/>
-                <Text style={styles.title}>Get Started Now</Text>
+                <Text style={styles.title}>Signup Placeholder</Text>
                 <Text style={styles.description}>Create an account or log in to use DoseUp</Text>
                 <View style={styles.buttonContainer}>
                     <LoginButtonToggle isLogin={isLogin} setIsLogin={handleButtonToggle} /> 
@@ -86,16 +94,33 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                             autoCapitalize='none'
                         />
                         <View style={styles.passwordContainer}>
-                            <TextInput 
+                        <TextInput 
                                 secureTextEntry={!showPassword}  
                                 value={password}
                                 onChangeText={setPassword}
                                 style={styles.input}
                                 placeholder='Enter Password'
-                            />
+                            />                            
                             <TouchableOpacity onPress={handlePasswordToggle} style={styles.iconContainer}>
                                 <MaterialCommunityIcons
                                     name={showPassword ? 'eye' : 'eye-off'}
+                                    size={20}
+                                    color='#AAAAAA'
+                                    style={styles.icon}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.passwordContainer}>
+                        <TextInput 
+                                secureTextEntry={!showPasswordConfirm}  
+                                value={passwordConfirm}
+                                onChangeText={setPasswordConfirm}
+                                style={styles.input}
+                                placeholder='Confirm Password'
+                            />                            
+                            <TouchableOpacity onPress={handlePasswordConfirmToggle} style={styles.iconContainer}>
+                                <MaterialCommunityIcons
+                                    name={showPasswordConfirm ? 'eye' : 'eye-off'}
                                     size={20}
                                     color='#AAAAAA'
                                     style={styles.icon}
