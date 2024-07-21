@@ -67,6 +67,7 @@ def signup(request):
 def logout(request):
     return
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_name(request):
@@ -78,3 +79,18 @@ def get_name(request):
             'first_name': user.first_name,
             'last_name': user.last_name
     }, status=status.HTTP_200_OK)
+
+        
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def add_info(request):
+    return
+
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def info_required_check(request):
+    user = request.user
+    if user.is_authenticated:
+        if not user.first_name or not user.last_name:
+            return Response({})

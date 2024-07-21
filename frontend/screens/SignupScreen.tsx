@@ -130,7 +130,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                     </View>
                     <LinearGradient colors={['#50E3C2', '#46D6CF']} style={styles.button}>
                         <TouchableOpacity onPress={handleSignUp} >
-                                <Text style={styles.buttonText}>Log In</Text>
+                                <Text style={styles.buttonText}>Sign Up</Text>
                         </TouchableOpacity>                        
                     </LinearGradient>
                 </View>
