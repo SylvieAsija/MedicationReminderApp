@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '@/screens/LoginScreen';
 import SignupScreen from '@/screens/SignupScreen';
 import HomeScreen from '@/screens/HomeScreen';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 type RootStackParamList = {
     Login: undefined;
