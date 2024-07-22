@@ -1,6 +1,6 @@
 // SignupScreen.tsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image, Button } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -9,6 +9,8 @@ import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@ex
 import { PlusJakartaSans_500Medium } from '@expo-google-fonts/plus-jakarta-sans';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import RNDateTimePicker from '@react-native-community/datetimepicker';
 
 type RootStackParamList = {
     Login: undefined;
@@ -17,34 +19,40 @@ type RootStackParamList = {
     Extra: undefined;
 };
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Extra'>;
 
 const ExtraInfoScreen: React.FC<Props> = ({ navigation }) => {
 
     let [fonts] = useFonts({Inter_500Medium, Inter_600SemiBold, Inter_700Bold, PlusJakartaSans_500Medium});
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [birthday, setBirthday] = useState('');
+    const [birthdayShow, setBirthdayShow] = useState(false)
+    const [phoneNumber, setPhoneNumber] = useState('');
 
-    const handleSignUp = async () => {
+    const handleAddedInfo = async () => {
         try {
-            const response = await axios.post('http://192.168.2.14:8000/signup/', { 
-                email: email,
-                password: password,
-                passwordConfirm: passwordConfirm,
+            const token = await SecureStore.getItemAsync('access_token');
+            if (!token) {
+              console.error('No access token found');
+              return;
+            }
+            console.log('token exists: ', token)
+            const response = await axios.post('http://192.168.2.14:8000/user/extra/', { 
+                first_name: firstName,
+                last_name: lastName,
+                birthday: birthday,
+                phone_number: phoneNumber,
+
+                headers: {
+                    Authorization: `Bearer ${token}`
+                  }
             });
-            console.log(response.data);
+            const valid = response.data
+            console.log(valid);
 
-            const { access, refresh } = response.data;
-            console.log(access, response);
             try {
-                await SecureStore.setItem('accessToken', access);
-                await SecureStore.setItem('refreshToken', refresh);
-
                 navigation.navigate('Home');
             } catch (error) {
                 console.error('Error setting tokens: ', error);
@@ -57,20 +65,16 @@ const ExtraInfoScreen: React.FC<Props> = ({ navigation }) => {
         }
     };
 
-    const handleButtonToggle = (isLogin: boolean) => {
-        if (isLogin)
-          navigation.navigate('Login');
-        if (!isLogin)
-          navigation.navigate('Signup')
+    const handleDateChange = (event: any, selectedDate: any) => {
+        const currentDate = selectedDate;
+        setBirthdayShow(false)
+        setBirthday(currentDate);
     }
 
-    const handlePasswordToggle = () => {
-        setShowPassword(!showPassword);
-    };
+    const handleShowBirthday = () => {
+        setBirthdayShow(true)
+    }
 
-    const handlePasswordConfirmToggle = () => {
-      setShowPasswordConfirm(!showPasswordConfirm);
-  };
 
     if (!fonts) 
         return <View></View>
@@ -79,59 +83,42 @@ const ExtraInfoScreen: React.FC<Props> = ({ navigation }) => {
             <View style={styles.container}>
                 <Image source={require('@/assets/images/pill_logo.png')} 
                 style={{width: 100, height: 100, alignSelf: 'center'}}/>
-                <Text style={styles.title}>Signup Placeholder</Text>
-                <Text style={styles.description}>Create an account or log in to use DoseUp</Text>
-                <View style={styles.buttonContainer}>
-                    <LoginButtonToggle isLogin={isLogin} setIsLogin={handleButtonToggle} /> 
-                </View>
+                <Text style={styles.title}>Get Started</Text>
+                <Text style={styles.description}>We just need some additional info</Text>
                 <View>
                     <View style={styles.inputContainer}>
                         <TextInput 
                             style={styles.input}
-                            placeholder='Enter Email'
-                            value={email}
-                            onChangeText={setEmail}
-                            keyboardType='email-address'
+                            placeholder='Enter First name'
+                            value={firstName}
+                            onChangeText={setFirstName}
                             autoCapitalize='none'
                         />
-                        <View style={styles.passwordContainer}>
                         <TextInput 
-                                secureTextEntry={!showPassword}  
-                                value={password}
-                                onChangeText={setPassword}
-                                style={styles.input}
-                                placeholder='Enter Password'
-                            />                            
-                            <TouchableOpacity onPress={handlePasswordToggle} style={styles.iconContainer}>
-                                <MaterialCommunityIcons
-                                    name={showPassword ? 'eye' : 'eye-off'}
-                                    size={20}
-                                    color='#AAAAAA'
-                                    style={styles.icon}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                        <View style={styles.passwordContainer}>
+                            style={styles.input}
+                            placeholder='Enter Last name'
+                            value={lastName}
+                            onChangeText={setLastName}
+                            autoCapitalize='none'
+                        />
                         <TextInput 
-                                secureTextEntry={!showPasswordConfirm}  
-                                value={passwordConfirm}
-                                onChangeText={setPasswordConfirm}
-                                style={styles.input}
-                                placeholder='Confirm Password'
-                            />                            
-                            <TouchableOpacity onPress={handlePasswordConfirmToggle} style={styles.iconContainer}>
-                                <MaterialCommunityIcons
-                                    name={showPasswordConfirm ? 'eye' : 'eye-off'}
-                                    size={20}
-                                    color='#AAAAAA'
-                                    style={styles.icon}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                            style={styles.input}
+                            placeholder='Enter Birthday YYYY-MM-DD'
+                            value={birthday}
+                            onChangeText={setBirthday}
+                            autoCapitalize='none'
+                        />
+                        <TextInput 
+                            style={styles.input}
+                            placeholder='Enter Phone Number'
+                            value={phoneNumber}
+                            onChangeText={setPhoneNumber}
+                            keyboardType='phone-pad'
+                            />
+                      </View>
                     <LinearGradient colors={['#50E3C2', '#46D6CF']} style={styles.button}>
-                        <TouchableOpacity onPress={handleSignUp} >
-                                <Text style={styles.buttonText}>Log In</Text>
+                        <TouchableOpacity onPress={handleAddedInfo} >
+                                <Text style={styles.buttonText}>Submit</Text>
                         </TouchableOpacity>                        
                     </LinearGradient>
                 </View>
@@ -173,8 +160,7 @@ const styles = StyleSheet.create ({
         flexDirection: 'column',
         alignSelf: 'center',
         alignItems: 'baseline',
-        paddingHorizontal: 10
-        
+        paddingHorizontal: 10,       
     },
     passwordContainer: {
         flexDirection: 'row',
