@@ -14,6 +14,7 @@ type RootStackParamList = {
     Login: undefined;
     Signup: undefined;
     Home: undefined;
+    Extra: undefined;
 };
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
@@ -38,13 +39,17 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             });
             console.log(response.data);
 
-            const { access, refresh } = response.data;
+            const { access, refresh, moreInfo } = response.data;
             console.log(access, response);
             try {
                 await SecureStore.setItem('accessToken', access);
                 await SecureStore.setItem('refreshToken', refresh);
 
-                navigation.navigate('Home');
+                if (moreInfo == 'true') {
+                    navigation.navigate('Extra');
+                } else {
+                    navigation.navigate('Home');
+                }
             } catch (error) {
                 console.error('Error setting tokens: ', error);
                 Alert.alert('Storage error');
