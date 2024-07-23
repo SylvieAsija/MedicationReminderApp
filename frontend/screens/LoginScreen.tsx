@@ -55,14 +55,6 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
         }
     };
 
-    const loggedNav = async () => {
-        try {
-
-        } catch (error) {
-
-        }
-    }
-
     const handleButtonToggle = (isLogin: boolean) => {
         if (isLogin) 
             navigation.navigate('Login');
