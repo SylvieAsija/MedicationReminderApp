@@ -1,4 +1,4 @@
-// SignupScreen.tsx
+// ExtraInfoScreen.tsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image, Button } from 'react-native';
 import axios from 'axios';
