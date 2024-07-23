@@ -31,9 +31,16 @@ def login(request):
 
     if user is not None:
         refresh = RefreshToken.for_user(user)
+        if not user.first_name or not user.last_name or not user.birthday or not user.phone_number:
+            return Response({
+                'access': str(refresh.access_token),
+                'refresh': str(refresh),
+                'moreInfo': 'true'
+            }, status=status.HTTP_200_OK)
         return Response({
             'access': str(refresh.access_token),
-            'refresh': str(refresh)
+            'refresh': str(refresh),
+            'moreInfo': 'false'
         }, status=status.HTTP_200_OK)
     else: 
         return Response({'error': 'Invalid credentials'}, status=400)
@@ -58,11 +65,17 @@ def signup(request):
     
     refresh = RefreshToken.for_user(user)
     
+    if not user.first_name or not user.last_name or not user.birthday or not user.phone_number:
+        return Response({
+            'access': str(refresh.access_token),
+            'refresh': str(refresh),
+            'moreInfo': 'true'
+        }, status=status.HTTP_201_CREATED)
     return Response({
         'access': str(refresh.access_token),
-        'refresh': str(refresh)
+        'refresh': str(refresh),
+        'moreInfo': 'false'
     }, status=status.HTTP_201_CREATED)
-
 
 def logout(request):
     return
@@ -82,15 +95,20 @@ def get_name(request):
 
         
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def add_info(request):
-    return
+    first_name = request.data.get('first_name')
+    last_name = request.data.get('last_name')
+    phone_number = request.data.get('phone_number')
+    birthday = request.data.get('birthday')
+    
+    if not first_name or not last_name or not phone_number or not birthday:
+        return Response({'error': 'All fields are required'},status=status.HTTP_400_BAD_REQUEST)
 
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def info_required_check(request):
-    user = request.user
-    if user.is_authenticated:
-        if not user.first_name or not user.last_name:
-            return Response({})
+    if len(phone_number) > 10:
+        return Response({'error': 'Invalid Phone Number'},status=status.HTTP_400_BAD_REQUEST)
+    
+    user = Users.objects.update(first_name=first_name, last_name=last_name, phone_number=phone_number, birthday=birthday)
+    return Response({
+        'success': 'true'    
+    }, status=status.HTTP_200_OK)
