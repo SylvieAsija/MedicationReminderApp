@@ -3,6 +3,7 @@ import React, { FC } from 'react'
 import { Tabs, Redirect } from 'expo-router'
 import { icons } from '@/constants'
 import { ColorValue } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 interface TabsProps {
   icon: undefined;
@@ -51,7 +52,7 @@ const CreateIcon: FC<CreateProps> = ({icon, color}) => {
 
 const TabsLayout = () => {
   return (
-    <>
+    <GestureHandlerRootView>
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
@@ -141,7 +142,7 @@ const TabsLayout = () => {
           }}
         />
       </Tabs>
-    </>
+    </GestureHandlerRootView>
   )
 }
 
