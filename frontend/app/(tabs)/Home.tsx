@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, Image, useWindowDimensions, Animated } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { images } from '@/constants'
+import { SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import { images } from '@/constants';
 import MedicationCard from '@/components/medicationCard';
+import AnimatedHeader from '@/components/animatedHeader';
 
 const Home: React.FC = () => {
-
+  
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const offset = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     const getName = async () => {
@@ -42,37 +44,70 @@ const Home: React.FC = () => {
     getName();
   }, []);
 
-
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView contentContainerStyle={{ height: '100%' }}>
-        <View style={styles.view}>
-          <Text style={styles.title}>Welcome {firstName} {lastName}!</Text>
-          <Image
-          source={images.cat}
-          />
-        </View>
-        <MedicationCard></MedicationCard>
-      </ScrollView>
-    </SafeAreaView>
+    <View style={{ flex: 1, backgroundColor: 'red', alignItems: 'center' }}>
+      <AnimatedHeader animatedValue={offset}/>
+    </View>
   );
 };
+
+//   return (
+//     <View style={styles.container}>
+//         <View style={{
+//           justifyContent: 'center',
+//           alignItems: 'center',
+//           width: useWindowDimensions().width,
+//           paddingVertical: 40
+//         }}>
+//           <Text style={styles.title}>Welcome {firstName} {lastName}!</Text>
+//           <Image
+//           source={images.cat}
+//           />
+//         </View>
+
+
+//           <ScrollView contentContainerStyle={{ height: useWindowDimensions().height, width: useWindowDimensions().width }}>
+
+//         <View style={{
+//           width: useWindowDimensions().width,
+//           backgroundColor: '#46d6cf',
+//           paddingTop: 70,
+//           alignItems: 'center',
+//           borderTopStartRadius: 50,
+//           borderTopEndRadius: 50
+//         }}>
+//           <MedicationCard
+//             time="08:00 AM"
+//             dose="2 Pills (10 mg)"
+//             note="Take before eating"
+//             name="Vitamin B12"
+//           />
+//           <MedicationCard
+//             time="12:00 AM"
+//             dose="1 Puff of inhaler"
+//             note=""
+//             name="Albuterol"
+//           />
+//         </View>
+//       </ScrollView>
+//       </View>
+        
+//   );
+// };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
+
   title: {
     fontSize: 24,
   },
-  view: {
-    width: '100%',
-    height: '70%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 4
+
+  cardContainer: {
+    
   }
 });
 
