@@ -4,7 +4,9 @@ import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
 import { images } from '@/constants';
 import MedicationCard from '@/components/medicationCard';
-import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetScrollView, BottomSheetView } from '@gorhom/bottom-sheet';
+import MedicationProgress from '@/components/medicationProgress';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Home: React.FC = () => {
   
@@ -45,7 +47,12 @@ const Home: React.FC = () => {
   const bottomSheetRef = useRef<BottomSheet>(null);
 
   return (
-    <View style={styles.container}>
+    <LinearGradient
+      colors={['#46D6CF', '#4CA3E2', '#46D6CF', '#4CA3E2']}
+      style={styles.container}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+    >
       <View style={{
         justifyContent: 'center',
         alignItems: 'center',
@@ -62,14 +69,20 @@ const Home: React.FC = () => {
       <BottomSheet
         ref={bottomSheetRef}
         snapPoints={['50%', '90%']}
-        handleStyle={{
-          backgroundColor: '#46d6cf',
-          borderTopLeftRadius: 50,
-          borderTopRightRadius: 50
-        }}>
+        handleIndicatorStyle={{display: 'none'}}
+        backgroundComponent={null}
+        >
+        <BottomSheetView
+          style={{
+            borderTopLeftRadius: 50,
+            borderTopRightRadius: 50
+          }}
+        >
+          <MedicationProgress xp={2} maxExp={3} />
+        </BottomSheetView>
         <BottomSheetScrollView
           style= {{
-            backgroundColor: '#46d6cf',
+            backgroundColor: '#F5F5F5',
           }}
           
           contentContainerStyle={{
@@ -90,7 +103,7 @@ const Home: React.FC = () => {
           />
         </BottomSheetScrollView>
       </BottomSheet>
-    </View> 
+    </LinearGradient> 
   );
 };
 
