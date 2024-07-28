@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text } from 'react-native'
 import React from 'react'
-import ProgressBar from '@/edited_packages/progressBar';
+import ProgressBar from '@/screens/progressBar';
 
 type progressProps = {
     xp: number;
