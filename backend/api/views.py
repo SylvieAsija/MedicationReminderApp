@@ -92,7 +92,7 @@ def get_name(request):
         return Response({
             'first_name': user.first_name, 
             'last_name': user.last_name
-    }, status=status.HTTP_200_OK)
+            }, status=status.HTTP_200_OK)
 
         
 @api_view(['POST'])
