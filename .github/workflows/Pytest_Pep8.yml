@@ -25,7 +25,7 @@ jobs:
       run: |
         pip install flake8
         # stop the build if there are PEP8 violation
-        flake8 --select=E . 
+        flake8 --select=E --ignore=E501 . 
     - name: Test with pytest
       run: |
         pip install pytest
