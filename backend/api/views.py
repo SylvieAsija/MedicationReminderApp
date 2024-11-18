@@ -17,14 +17,14 @@ from rest_framework.permissions import IsAuthenticated
 
 Users = get_user_model()
 
+
 @api_view(['POST'])
 def login(request):
     email = request.data.get('email')
     password = request.data.get('password')
     
     if not email or not password:
-        return Response({'error': 'All fields are required'},status=status.HTTP_400_BAD_REQUEST)
-
+        return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
 
     print(f"Received login request with email: {email}, password: {password}")
     user = authenticate(request, username=email, password=password)
@@ -53,7 +53,7 @@ def signup(request):
     passwordConfirm = request.data.get('passwordConfirm')
     
     if not email or not password or not passwordConfirm:
-        return Response({'error': 'All fields are required'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
     
     if password != passwordConfirm:
         return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
@@ -77,6 +77,7 @@ def signup(request):
         'moreInfo': 'false'
     }, status=status.HTTP_201_CREATED)
 
+
 def logout(request):
     return
 
@@ -89,7 +90,7 @@ def get_name(request):
     
     if user.is_authenticated:
         return Response({
-            'first_name': user.first_name,
+            'first_name': user.first_name, 
             'last_name': user.last_name
     }, status=status.HTTP_200_OK)
 
@@ -103,10 +104,10 @@ def add_info(request):
     birthday = request.data.get('birthday')
     
     if not first_name or not last_name or not phone_number or not birthday:
-        return Response({'error': 'All fields are required'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
 
     if len(phone_number) > 10:
-        return Response({'error': 'Invalid Phone Number'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Invalid Phone Number'}, status=status.HTTP_400_BAD_REQUEST)
     
     user = Users.objects.update(first_name=first_name, last_name=last_name, phone_number=phone_number, birthday=birthday)
     return Response({
