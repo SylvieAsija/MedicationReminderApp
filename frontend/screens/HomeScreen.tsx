@@ -17,7 +17,7 @@ const HomeScreen: React.FC = () => {
           return;
         }
         console.log('token exists: ', token)
-        const response = await axios.get('http://192.168.2.14:8000/user/', {
+        const response = await axios.get('http://192.168.68.81:8000/user/', {
           headers: {
             Authorization: `Bearer ${token}`
           }

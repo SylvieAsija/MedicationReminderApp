@@ -32,7 +32,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
     const handleSignUp = async () => {
         try {
-            const response = await axios.post('http://192.168.2.14:8000/signup/', { 
+            const response = await axios.post('http://192.168.68.81:8000/signup/', { 
                 email: email,
                 password: password,
                 passwordConfirm: passwordConfirm,

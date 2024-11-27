@@ -39,7 +39,7 @@ const ExtraInfoScreen: React.FC<Props> = ({ navigation }) => {
               return;
             }
             console.log('token exists: ', token)
-            const response = await axios.post('http://192.168.2.14:8000/user/extra/', { 
+            const response = await axios.post('http://192.168.68.81:8000/user/extra/', { 
                 first_name: firstName,
                 last_name: lastName,
                 birthday: birthday,

@@ -59,7 +59,7 @@ def signup(request):
         return Response({'error': 'Passwords do not match'}, status=status.HTTP_400_BAD_REQUEST)
     
     if Users.objects.filter(username=email).exists():
-        return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'error': 'Account already exists'}, status=status.HTTP_400_BAD_REQUEST)
     
     user = Users.objects.create_user(username=email, email=email, password=password)
     
@@ -96,7 +96,7 @@ def get_name(request):
 
         
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def add_info(request):
     first_name = request.data.get('first_name')
     last_name = request.data.get('last_name')
