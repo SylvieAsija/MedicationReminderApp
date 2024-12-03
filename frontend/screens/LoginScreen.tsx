@@ -9,6 +9,8 @@ import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@ex
 import { PlusJakartaSans_500Medium } from '@expo-google-fonts/plus-jakarta-sans';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useDispatch, useSelector } from 'react-redux';
+import { birthday_change, email_change, fname_change, lname_change, phone_number_change } from '@/store/slices/userSlice';
 
 type RootStackParamList = {
     Login: undefined;
@@ -28,13 +30,17 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [isLogin, setIsLogin] = useState(true);
 
+    // const user = useSelector(selectUser)
+    const dispatch = useDispatch()
+
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://192.168.68.81:8000/login/', { 
+            const response = await axios.post('http://192.168.2.14:8000/login/', { 
                 email: email,
                 password: password,
             });
-            const { access, refresh, moreInfo } = response.data;
+            dispatch(email_change(email))
+            const { access, refresh, moreInfo, info } = response.data;
             try {
                 await SecureStore.setItemAsync('access_token', access);
                 await SecureStore.setItemAsync('refresh_token', refresh);
@@ -42,6 +48,10 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 if (moreInfo == 'true') {
                     navigation.navigate('Extra');
                 } else {
+                    dispatch(fname_change(info[0]))
+                    dispatch(lname_change(info[1]))
+                    dispatch(birthday_change(info[2]))
+                    dispatch(phone_number_change(info[3]))
                     navigation.navigate('Home');
                 }
             } catch (error) {

@@ -9,6 +9,8 @@ import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@ex
 import { PlusJakartaSans_500Medium } from '@expo-google-fonts/plus-jakarta-sans';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useDispatch } from 'react-redux';
+import { email_change } from '@/store/slices/userSlice';
 
 type RootStackParamList = {
     Login: undefined;
@@ -30,14 +32,18 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
     const [isLogin, setIsLogin] = useState(false);
 
+    const dispatch = useDispatch()
+
     const handleSignUp = async () => {
         try {
-            const response = await axios.post('http://192.168.68.81:8000/signup/', { 
+            const response = await axios.post('http://192.168.2.14:8000/signup/', { 
                 email: email,
                 password: password,
                 passwordConfirm: passwordConfirm,
             });
             console.log(response.data);
+
+            dispatch(email_change(email))
 
             const { access, refresh, moreInfo } = response.data;
             console.log(access, response);

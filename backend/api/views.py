@@ -69,12 +69,14 @@ def signup(request):
         return Response({
             'access': str(refresh.access_token),
             'refresh': str(refresh),
-            'moreInfo': 'true'
+            'moreInfo': 'true',
+            'info': [user.first_name, user.last_name, user.birthday, user.phone_number]
         }, status=status.HTTP_201_CREATED)
     return Response({
         'access': str(refresh.access_token),
         'refresh': str(refresh),
-        'moreInfo': 'false'
+        'moreInfo': 'false',
+        'info': 'false'
     }, status=status.HTTP_201_CREATED)
 
 
