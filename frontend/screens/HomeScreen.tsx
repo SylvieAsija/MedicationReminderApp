@@ -5,12 +5,12 @@ import * as SecureStore from 'expo-secure-store'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/store/slices/userSlice'
 
-const user = useSelector(selectUser)
-
 const HomeScreen: React.FC = () => {
 
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
+
+  const user = useSelector(selectUser)
 
   useEffect(() => {
     const getName = async () => {

@@ -98,7 +98,7 @@ def get_name(request):
 
         
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticated])
 def add_info(request):
     first_name = request.data.get('first_name')
     last_name = request.data.get('last_name')
