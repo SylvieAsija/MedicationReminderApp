@@ -1,10 +1,10 @@
 // index.tsx
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import LoginScreen from '@/screens/LoginScreen';
-import SignupScreen from '@/screens/SignupScreen';
-import HomeScreen from '@/screens/HomeScreen';
-import ExtraInfoScreen from '@/screens/ExtraInfoScreen';
+import LoginScreen from '@/app/(tabs)/LoginScreen';
+import SignupScreen from '@/app/(tabs)/SignupScreen';
+import HomeScreen from '@/app/(tabs)/HomeScreen';
+import ExtraInfoScreen from '@/app/(tabs)/ExtraInfoScreen';
 import { store } from '@/store';
 import { Provider } from 'react-redux';
 
