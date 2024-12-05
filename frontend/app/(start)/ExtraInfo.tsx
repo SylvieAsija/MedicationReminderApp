@@ -12,16 +12,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 
-type RootStackParamList = {
-    Login: undefined;
-    Signup: undefined;
-    Home: undefined;
-    Extra: undefined;
-};
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Extra'>;
-
-const ExtraInfoScreen: React.FC<Props> = ({ navigation }) => {
+export default function ExtraInfoScreen() {
 
     let [fonts] = useFonts({Inter_500Medium, Inter_600SemiBold, Inter_700Bold, PlusJakartaSans_500Medium});
 
@@ -53,7 +45,7 @@ const ExtraInfoScreen: React.FC<Props> = ({ navigation }) => {
             console.log(valid);
 
             try {
-                navigation.navigate('Home');
+                // navigation.navigate('Home');
             } catch (error) {
                 console.error('Error setting tokens: ', error);
                 Alert.alert('Storage error');
@@ -206,5 +198,3 @@ const styles = StyleSheet.create ({
         paddingBottom: 5
     },
 });
-
-export default ExtraInfoScreen;

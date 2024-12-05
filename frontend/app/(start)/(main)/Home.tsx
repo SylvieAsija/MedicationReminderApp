@@ -5,8 +5,8 @@ import * as SecureStore from 'expo-secure-store'
 import { useSelector } from 'react-redux'
 import { selectUser } from '@/store/slices/userSlice'
 
-const HomeScreen: React.FC = () => {
 
+export default function HomeScreen() {
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
 
@@ -59,5 +59,3 @@ const styles = StyleSheet.create({
     fontSize: 24,
   },
 });
-
-export default HomeScreen;

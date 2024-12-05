@@ -1,60 +1,49 @@
-// SignupScreen.tsx
+// LoginScreen.tsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, Image } from 'react-native';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import LoginButtonToggle from '@/components/loginSignupToggle';
 import { useFonts, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import { PlusJakartaSans_500Medium } from '@expo-google-fonts/plus-jakarta-sans';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
-import { useDispatch } from 'react-redux';
-import { email_change } from '@/store/slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { birthday_change, email_change, fname_change, lname_change, phone_number_change } from '@/store/slices/userSlice';
 
-type RootStackParamList = {
-    Login: undefined;
-    Signup: undefined;
-    Home: undefined;
-    Extra: undefined;
-};
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Signup'>;
-
-const LoginScreen: React.FC<Props> = ({ navigation }) => {
+export default function LoginScreen() {
 
     let [fonts] = useFonts({Inter_500Medium, Inter_600SemiBold, Inter_700Bold, PlusJakartaSans_500Medium});
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
 
+    // const user = useSelector(selectUser)
     const dispatch = useDispatch()
 
-    const handleSignUp = async () => {
+    const handleLogin = async () => {
         try {
-            const response = await axios.post('http://192.168.2.14:8000/signup/', { 
+            const response = await axios.post('http://192.168.2.14:8000/login/', { 
                 email: email,
                 password: password,
-                passwordConfirm: passwordConfirm,
             });
-            console.log(response.data);
-
             dispatch(email_change(email))
-
-            const { access, refresh, moreInfo } = response.data;
-            console.log(access, response);
+            const { access, refresh, moreInfo, info } = response.data;
             try {
-                await SecureStore.setItem('accessToken', access);
-                await SecureStore.setItem('refreshToken', refresh);
+                await SecureStore.setItemAsync('access_token', access);
+                await SecureStore.setItemAsync('refresh_token', refresh);
 
                 if (moreInfo == 'true') {
-                    navigation.navigate('Extra');
+                    // navigation.navigate('Extra');
                 } else {
-                    navigation.navigate('Home');
+                    dispatch(fname_change(info[0]))
+                    dispatch(lname_change(info[1]))
+                    dispatch(birthday_change(info[2]))
+                    dispatch(phone_number_change(info[3]))
+                    // navigation.navigate('Home');
                 }
             } catch (error) {
                 console.error('Error setting tokens: ', error);
@@ -63,24 +52,22 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
         } catch (error) {
             console.error('Error handling response: ', error);
-            Alert.alert('Login Failed', 'Invalid email or password or password confirm');
+            Alert.alert('Login Failed', 'Invalid email or password');
         }
     };
 
     const handleButtonToggle = (isLogin: boolean) => {
         if (isLogin)
-          navigation.navigate('Login');
+            print()
+            // navigation.navigate('Login');
         if (!isLogin)
-          navigation.navigate('Signup')
+            print() 
+            // navigation.navigate('Signup');
     }
 
     const handlePasswordToggle = () => {
         setShowPassword(!showPassword);
     };
-
-    const handlePasswordConfirmToggle = () => {
-      setShowPasswordConfirm(!showPasswordConfirm);
-  };
 
     if (!fonts) 
         return <View></View>
@@ -89,7 +76,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             <View style={styles.container}>
                 <Image source={require('@/assets/images/pill_logo.png')} 
                 style={{width: 100, height: 100, alignSelf: 'center'}}/>
-                <Text style={styles.title}>Signup Placeholder</Text>
+                <Text style={styles.title}>Get Started Now</Text>
                 <Text style={styles.description}>Create an account or log in to use DoseUp</Text>
                 <View style={styles.buttonContainer}>
                     <LoginButtonToggle isLogin={isLogin} setIsLogin={handleButtonToggle} /> 
@@ -105,13 +92,13 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                             autoCapitalize='none'
                         />
                         <View style={styles.passwordContainer}>
-                        <TextInput 
+                            <TextInput 
                                 secureTextEntry={!showPassword}  
                                 value={password}
                                 onChangeText={setPassword}
                                 style={styles.input}
                                 placeholder='Enter Password'
-                            />                            
+                            />
                             <TouchableOpacity onPress={handlePasswordToggle} style={styles.iconContainer}>
                                 <MaterialCommunityIcons
                                     name={showPassword ? 'eye' : 'eye-off'}
@@ -121,27 +108,10 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                                 />
                             </TouchableOpacity>
                         </View>
-                        <View style={styles.passwordContainer}>
-                        <TextInput 
-                                secureTextEntry={!showPasswordConfirm}  
-                                value={passwordConfirm}
-                                onChangeText={setPasswordConfirm}
-                                style={styles.input}
-                                placeholder='Confirm Password'
-                            />                            
-                            <TouchableOpacity onPress={handlePasswordConfirmToggle} style={styles.iconContainer}>
-                                <MaterialCommunityIcons
-                                    name={showPasswordConfirm ? 'eye' : 'eye-off'}
-                                    size={20}
-                                    color='#AAAAAA'
-                                    style={styles.icon}
-                                />
-                            </TouchableOpacity>
-                        </View>
                     </View>
                     <LinearGradient colors={['#50E3C2', '#46D6CF']} style={styles.button}>
-                        <TouchableOpacity onPress={handleSignUp} >
-                                <Text style={styles.buttonText}>Sign Up</Text>
+                        <TouchableOpacity onPress={handleLogin} >
+                                <Text style={styles.buttonText}>Log In</Text>
                         </TouchableOpacity>                        
                     </LinearGradient>
                 </View>
@@ -230,5 +200,3 @@ const styles = StyleSheet.create ({
         paddingBottom: 5
     },
 });
-
-export default LoginScreen;
